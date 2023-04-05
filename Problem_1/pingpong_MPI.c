@@ -16,11 +16,18 @@ int main(int argc, char* argv[]) {
     /* Read in command line items */
     int n_items = strtol(argv[1], NULL, 10);
     FILE* outputFile = fopen(argv[2], "w");
+    int* ping_array = (int*)malloc(n_items * sizeof(int));
 
     /* Start up MPI */
-    int my_rank;
-    // TODO: finish setting up MPI
+    int comm_sz;    /* Number of processes*/
+    int my_rank;    /* My process rank */
+    MPI_INIT(NULL, NULL);
+    
+    /* Get the number of processes*/
+    MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
 
+    /* Get my rank among all the processes */
+    MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
     // Start time
     double starttime;
@@ -33,11 +40,11 @@ int main(int argc, char* argv[]) {
     if (my_rank == 0) {
     
         // Fill array with incremental values
-        for (i = 0; i < n_items; i++)
+        for (int i = 0; i < n_items; i++)
             ping_array[i] = i;
 
         // TODO: if myrank is 0
-
+        
 
 
         // End time
@@ -49,6 +56,9 @@ int main(int argc, char* argv[]) {
         // TODO: if my rank not 0
 
     }
+
+    /* Shut down MPI */
+    MPI_Finalize();
 
     return 0;
 } /* main */
