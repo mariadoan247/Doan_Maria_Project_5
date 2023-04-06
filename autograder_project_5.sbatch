@@ -25,6 +25,7 @@
 module purge
 
 module load SciPy-bundle/2020.03-foss-2020a-Python-3.8.2
+module load OpenMPI
 
 # To run all the problems and get all results
 # python3 -u autograder_project_5.py

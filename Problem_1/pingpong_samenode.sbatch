@@ -24,6 +24,7 @@ echo ""
 
 module load intel
 module load GCC
+module load OpenMPI
 
 mpirun -n 2 ./pingpong_MPI 1000000 time_1M_same.txt
 # add for other sizes

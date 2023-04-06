@@ -7,14 +7,14 @@
 #
 # --------------------- Change the items below here! ---------------------
 #
-#SBATCH --mail-user=yourEmailHere@ou.edu
+#SBATCH --mail-user=mariadoan247@ou.edu
 #SBATCH --mail-type=ALL
 #
 #SBATCH --job-name=hw5prob2
 #
-#SBATCH --chdir=/home/oucspdnxxx/  ... /Project_5/Problem_2
-#SBATCH --output=/home/oucspdnxxx/ ... /Project_5/Problem_2/_P5-2_%J_stdout.txt
-#SBATCH --error=/home/oucspdnxxx/  ... /Project_5/Problem_2/_P5-2_%J_stderr.txt
+#SBATCH --chdir=/home/oucspdn086/Doan_Maria_Project_5/Problem_2
+#SBATCH --output=/home/oucspdn086/Doan_Maria_Project_5/Problem_2/_P5-2_%J_stdout.txt
+#SBATCH --error=/home/oucspdn086/Doan_Maria_Project_5/Problem_2/_P5-2_%J_stderr.txt
 #
 #################################################
 
@@ -24,6 +24,7 @@ echo ""
 
 module load intel
 module load GCC
+module load OpenMPI
 
 mpirun -n 2 ./dot_product_MPI 262144 vec1_2_18.csv vec2_2_18.csv result_2p_18.csv time_2p_18.csv
 # add for other sizes

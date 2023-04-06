@@ -1,5 +1,5 @@
-all: dotprod_MPI.c
-	mpicc -g -Wall -o dotprod_MPI dotprod_MPI.c
+all: dot_product_MPI.c
+	mpicc -g -Wall -o dot_product_MPI dot_product_MPI.c
 
 clean:
-	$(RM) dotprod_MPI
+	$(RM) dot_product_MPI

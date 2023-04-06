@@ -8,12 +8,12 @@
 #
 # --------------------- Change the items below here! ---------------------
 #
-#SBATCH --mail-user=shaw.jessica1999@ou.edu
+#SBATCH --mail-user=mariadoan247@ou.edu
 #SBATCH --mail-type=ALL
 #
-#SBATCH --chdir=/home/oucspdnxxx/   ... /Project_5/Problem_3
-#SBATCH --output=/home/oucspdnxxx/  ... /Project_5/Problem_3/_P5-3_%J_stdout.txt
-#SBATCH --error=/home/oucspdnxxx/   ... /Project_5/Problem_3/_P5-3_%J_stderr.txt
+#SBATCH --chdir=/home/oucspdn086/Doan_Maria_Project_5/Problem_3
+#SBATCH --output=/home/oucspdn086/Doan_Maria_Project_5/Problem_3/_P5-3_%J_stdout.txt
+#SBATCH --error=/home/oucspdn086/Doan_Maria_Project_5/Problem_3/_P5-3_%J_stderr.txt
 
 #################################################
 
@@ -22,6 +22,7 @@ pwd
 echo ""
 
 module load intel
+module load OpenMPI
 
 mpirun -n 2 ./merge_sort_MPI 262144 ../test-data/vec1_2^18.csv result_2_same_18.csv time_2_same_18.csv
 # add more here ...
