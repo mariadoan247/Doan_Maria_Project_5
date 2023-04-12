@@ -1,5 +1,14 @@
-# vscode
+# files without .
+*
+!/**/
+!*.*
+
+# folders
 .vscode/
+__pycache__/
+
+# output files
+*.csv
 
 # Prerequisites
 *.d
