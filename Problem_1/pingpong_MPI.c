@@ -7,7 +7,7 @@
 
 int main(int argc, char* argv[]) {
     // Catch console errors
-    if (argc != 10)
+    if (argc != 3)
     {
         printf("USE LIKE THIS: pingpong_MPI n_items time_prob1_MPI.csv\n");
         return EXIT_FAILURE;
@@ -19,13 +19,9 @@ int main(int argc, char* argv[]) {
     int* ping_array = (int*)malloc(n_items * sizeof(int));
 
     /* Start up MPI */
-    int comm_sz;    /* Number of processes*/
     int my_rank;    /* My process rank */
-    MPI_INIT(NULL, NULL);
+    MPI_Init(NULL, NULL);
     
-    /* Get the number of processes*/
-    MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
-
     /* Get my rank among all the processes */
     MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 
@@ -44,16 +40,23 @@ int main(int argc, char* argv[]) {
             ping_array[i] = i;
 
         // TODO: if myrank is 0
-        
-
+        for (int i = 0; i < 1000; ++i) {
+            MPI_Send(ping_array, n_items, MPI_INT, 1, 0, MPI_COMM_WORLD);
+            MPI_Recv(ping_array, n_items, MPI_INT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+        }
 
         // End time
         double endtime = MPI_Wtime();
         // TODO: output
+        fprintf(outputFile, "%f", endtime-starttime);
     }
     else {
 
         // TODO: if my rank not 0
+        for (int i = 0; i < 1000; ++i) {
+            MPI_Recv(ping_array, n_items, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+            MPI_Send(ping_array, n_items, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        }
 
     }
 
