@@ -24,10 +24,13 @@ echo ""
 
 module load intel
 module load GCC
-module load OpenMPI
+# module load OpenMPI
 
-mpirun -n 2 ./pingpong_MPI 1000000 time_1M_same.txt
+make clean
+make
+
+mpirun -n 2 ./pingpong_MPI 1000000 time_1M_same.csv
 # add for other sizes
-# mpirun -n 2 ./pingpong_MPI 2000000 time_1M_same.txt
-# mpirun -n 2 ./pingpong_MPI 4000000 time_1M_same.txt
-# mpirun -n 2 ./pingpong_MPI 8000000 time_1M_same.txt
+mpirun -n 2 ./pingpong_MPI 2000000 time_2M_same.csv
+mpirun -n 2 ./pingpong_MPI 4000000 time_4M_same.csv
+mpirun -n 2 ./pingpong_MPI 8000000 time_8M_same.csv

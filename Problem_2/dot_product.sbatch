@@ -24,7 +24,7 @@ echo ""
 
 module load intel
 module load GCC
-module load OpenMPI
+# module load OpenMPI
 
 mpirun -n 2 ./dot_product_MPI 262144 vec1_2_18.csv vec2_2_18.csv result_2p_18.csv time_2p_18.csv
 # add for other sizes
