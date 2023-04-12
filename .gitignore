@@ -9,6 +9,7 @@ __pycache__/
 
 # output files
 *.csv
+*.txt
 
 # Prerequisites
 *.d
