@@ -22,8 +22,10 @@ echo "Working directory:"
 pwd
 echo ""
 
-module load intel
-module load GCC
+module load intel/2022.2
+module load OpenMPI/4.1.4-GCC-11.3.0
+# module load intel
+# module load GCC
 # module load OpenMPI
 
 make clean

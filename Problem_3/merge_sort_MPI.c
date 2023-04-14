@@ -9,7 +9,7 @@
 
 // to read in file
 float* read_input(FILE* inputFile, int n_items);
-float cmpfloat(const void* a, const void* b);
+int cmpfloat(const void* a, const void* b);
 
 /* Main Program -------------- */
 int main (int argc, char *argv[])
@@ -97,7 +97,7 @@ float* read_input(FILE* inputFile, int n_items) {
 /* Cmp Int ----------------------------- */
 // use this for qsort
 // source: https://stackoverflow.com/questions/3886446/problem-trying-to-use-the-c-qsort-function
-float cmpfloat(const void* a, const void* b) {
+int cmpfloat(const void* a, const void* b) {
     float fa = *(const float*)a;
     float fb = *(const float*)b;
     return (fa > fb) - (fa < fb);
