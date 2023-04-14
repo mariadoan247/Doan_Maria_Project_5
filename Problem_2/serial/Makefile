@@ -1,5 +1,5 @@
 all: dotprod_serial.c
-	gcc -g -Wall -o dotprod_serial dotprod_serial.c
+	gcc -g -Wall -std=gnu99 -o dotprod_serial dotprod_serial.c
 
-lean:
+clean:
 	$(RM) dotprod_serial

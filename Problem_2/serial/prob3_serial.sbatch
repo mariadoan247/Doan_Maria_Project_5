@@ -8,16 +8,21 @@
 #
 # --------------------- Change the items below here! ---------------------
 #
-#SBATCH --mail-user=yourEmailHere@ou.edu
+#SBATCH --mail-user=mariadoan247@ou.edu
 #SBATCH --mail-type=ALL
 #
 #SBATCH --job-name=hw5prob2
 #
-#SBATCH --chdir=/home/oucspdnxxx/  ... /Project_5/Problem_2
-#SBATCH --output=/home/oucspdnxxx/ ... /Project_5/Problem_2/_P5-2_%J_stdout.txt
-#SBATCH --error=/home/oucspdnxxx/  ... /Project_5/Problem_2/_P5-2_%J_stderr.txt
+#SBATCH --chdir=/home/oucspdn086/Doan_Maria_Project_5/Problem_2/serial
+#SBATCH --output=/home/oucspdn086/Doan_Maria_Project_5/Problem_2/serial/_P5-2_%J_stdout.txt
+#SBATCH --error=/home/oucspdn086/Doan_Maria_Project_5/Problem_2/serial/_P5-2_%J_stderr.txt
 #
 #################################################
 
-./dotprod_serial 262144 ../../test_data/vec1_2_18.csv ../../test_data/vec2_2_18.csv result_2_18.csv time_2_18.csv
+make clean
+make
+
+./dotprod_serial 262144 ../../../test_data/Vectors/vec1_2_18.csv ../../../test_data/Vectors/vec2_2_18.csv result_2_18.csv time_2_18.csv
 # add other sizes
+./dotprod_serial 524288 ../../../test_data/Vectors/vec1_2_19.csv ../../../test_data/Vectors/vec2_2_19.csv result_2_19.csv time_2_19.csv
+./dotprod_serial 1048576 ../../../test_data/Vectors/vec1_2_20.csv ../../../test_data/Vectors/vec2_2_20.csv result_2_20.csv time_2_20.csv
