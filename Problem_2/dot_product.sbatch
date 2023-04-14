@@ -22,9 +22,13 @@ echo "Working directory:"
 pwd
 echo ""
 
-module load intel
-module load GCC
+module load intel/2022.2
+module load OpenMPI/4.1.4-GCC-11.3.0
+# module load intel
+# module load GCC
 # module load OpenMPI
 
-mpirun -n 2 ./dot_product_MPI 262144 vec1_2_18.csv vec2_2_18.csv result_2p_18.csv time_2p_18.csv
+mpirun -n 2 ./dot_product_MPI 262144 ../../test_data/Vectors/vec1_2_18.csv ../../../test_data/Vectors/vec2_2_18.csv result_2_18.csv time_2_18.csv
 # add for other sizes
+mpirun -n 2 ./dot_product_MPI 524288 ../../test_data/Vectors/vec1_2_19.csv ../../../test_data/Vectors/vec2_2_19.csv result_2_19.csv time_2_19.csv
+mpirun -n 2 ./dot_product_MPI 1048576 ../../test_data/Vectors/vec1_2_20.csv ../../../test_data/Vectors/vec2_2_20.csv result_2_20.csv time_2_20.csv
