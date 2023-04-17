@@ -2,6 +2,7 @@
 #include <stdlib.h> // for strtol
 #include <string.h>
 #include <time.h>
+#include "mpi.h"
 
 #define MAXCHAR 25
 #define BILLION  1000000000.0
@@ -10,7 +11,7 @@ int main (int argc, char *argv[])
 {
     if( argc != 6)
     {
-        printf("USE LIKE THIS: dotprod_serial vector_size vec_1.csv vec_2.csv result.csv time.csv\n");
+        printf("USE LIKE THIS: dot_product_MPI vector_size vec_1.csv vec_2.csv result.csv time.csv\n");
         return EXIT_FAILURE;
     }
 
