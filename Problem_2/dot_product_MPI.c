@@ -2,6 +2,7 @@
 #include <stdlib.h> // for strtol
 #include <string.h>
 #include <time.h>
+#include "mpi.h"
 
 #define MAXCHAR 25
 #define BILLION  1000000000.0
@@ -27,58 +28,86 @@ int main (int argc, char *argv[])
     FILE* outputFile = fopen(argv[4], "w");
     FILE* timeFile = fopen(argv[5], "w");
 
+    /* Start up MPI */
+    int comm_sz, my_rank;
+    float dot_product = 0.0;
+    MPI_Comm comm;
+    MPI_Init(NULL, NULL);
+    comm = MPI_COMM_WORLD;
+    MPI_Comm_size(comm, &comm_sz);
+    MPI_Comm_rank(comm, &my_rank);
+
+    MPI_Bcast(&vec_size, 1, MPI_FLOAT, 0, comm);
+    float local_vec_size = vec_size/comm_sz;
+    float* local_vec_1 = malloc(local_vec_size * sizeof(float));
+    float* local_vec_2 = malloc(local_vec_size * sizeof(float));
+
     // To read in
-    double* vec_1 = malloc(vec_size * sizeof(double));
-    double* vec_2 = malloc(vec_size * sizeof(double));
+    float* vec_1 = malloc(vec_size * sizeof(float));
+    float* vec_2 = malloc(vec_size * sizeof(float));
 
-    // Store values of vector
-    int k = 0;
-    char str[MAXCHAR];
-    while (fgets(str, MAXCHAR, inputFile1) != NULL)
-    {
-        sscanf( str, "%lf", &(vec_1[k]) );
-        k++;
-    }
-    fclose(inputFile1); 
+    if (my_rank == 0) {
+        // Store values of vector
+        int k = 0;
+        char str[MAXCHAR];
+        while (fgets(str, MAXCHAR, inputFile1) != NULL)
+        {
+            sscanf( str, "%f", &(vec_1[k]) );
+            k++;
+        }
+        MPI_Scatter(vec_1, local_vec_size, MPI_FLOAT, local_vec_1, local_vec_size, MPI_FLOAT, 0, comm);
+        fclose(inputFile1);
+        free(vec_1);
 
-    // Store values of vector
-    k = 0;
-    while (fgets(str, MAXCHAR, inputFile2) != NULL)
-    {
-        sscanf( str, "%lf", &(vec_2[k]) );
-        k++;
+        // Store values of vector
+        k = 0;
+        while (fgets(str, MAXCHAR, inputFile2) != NULL)
+        {
+            sscanf( str, "%f", &(vec_2[k]) );
+            k++;
+        }
+        MPI_Scatter(vec_2, local_vec_size, MPI_FLOAT, local_vec_2, local_vec_size, MPI_FLOAT, 0, comm);
+        fclose(inputFile2);
+        free(vec_2);
+    } else {
+        MPI_Scatter(vec_1, local_vec_size, MPI_FLOAT, local_vec_1, local_vec_size, MPI_FLOAT, 0, comm);
+        MPI_Scatter(vec_2, local_vec_size, MPI_FLOAT, local_vec_2, local_vec_size, MPI_FLOAT, 0, comm);
+        free(vec_1);
+        free(vec_2);
     }
-    fclose(inputFile2); 
   
-
-    // info about timing in C -------------------------------------
-    // https://www.techiedelight.com/find-execution-time-c-program/
-    struct timespec start, end;
-    
-    // Get start time
-    clock_gettime(CLOCK_REALTIME, &start);
+    // Start time
+    double starttime;
+    starttime = MPI_Wtime();
 
     // Get dot product
-    double dot_product = 0.0;
-    for (int i = 0; i < vec_size; i++)
-        dot_product += vec_1[i] * vec_2[i];
-    printf("DP in C: %lf\n", dot_product);
+    float local_dot_product = 0.0;
+    for (int i = 0; i < local_vec_size; i++)
+        local_dot_product += local_vec_1[i] * local_vec_2[i];
 
-    // Get finish time
-    clock_gettime(CLOCK_REALTIME, &end);
-    double time_spent = (end.tv_sec - start.tv_sec) +
-                        (end.tv_nsec - start.tv_nsec) / BILLION;
+    if (my_rank == 0) {
 
-    // Print to output
-    fprintf(outputFile, "%lf", dot_product);
-    fprintf(timeFile, "%.20f", time_spent);
+        MPI_Reduce(&local_dot_product, &dot_product, 1, MPI_FLOAT, MPI_SUM, 0, MPI_COMM_WORLD);
 
-    // Cleanup
-    fclose (outputFile);
-    fclose (timeFile);
+        printf("DP in C: %f\n", dot_product);
 
-    free(vec_1);
-    free(vec_2);
+        // End time
+        double endtime = MPI_Wtime();
+
+        // Print to output
+        fprintf(outputFile, "%f", dot_product);
+        fprintf(timeFile, "%.20f", endtime-starttime);
+
+        // Cleanup
+        fclose (outputFile);
+        fclose (timeFile);
+    } else {
+        MPI_Reduce(&local_dot_product, &dot_product, 1, MPI_FLOAT, MPI_SUM, 0, MPI_COMM_WORLD);
+    }
+
+    /* Shut down MPI */
+    MPI_Finalize();
 
     return 0;
 }
+

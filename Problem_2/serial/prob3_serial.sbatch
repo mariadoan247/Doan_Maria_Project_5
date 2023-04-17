@@ -22,7 +22,7 @@
 make clean
 make
 
-./dotprod_serial 262144 ../../../test_data/Vectors/vec1_2_18.csv ../../../test_data/Vectors/vec2_2_18.csv result_2_18.csv time_2_18.csv
+./dotprod_serial 262144 ../../../test_data/Vectors/vec1_2^18.csv ../../../test_data/Vectors/vec2_2^18.csv result_2^18.csv time_2^18.csv
 # add other sizes
-./dotprod_serial 524288 ../../../test_data/Vectors/vec1_2_19.csv ../../../test_data/Vectors/vec2_2_19.csv result_2_19.csv time_2_19.csv
-./dotprod_serial 1048576 ../../../test_data/Vectors/vec1_2_20.csv ../../../test_data/Vectors/vec2_2_20.csv result_2_20.csv time_2_20.csv
+./dotprod_serial 524288 ../../../test_data/Vectors/vec1_2^19.csv ../../../test_data/Vectors/vec2_2^19.csv result_2^19.csv time_2^19.csv
+./dotprod_serial 1048576 ../../../test_data/Vectors/vec1_2^20.csv ../../../test_data/Vectors/vec2_2^20.csv result_2^20.csv time_2^20.csv
