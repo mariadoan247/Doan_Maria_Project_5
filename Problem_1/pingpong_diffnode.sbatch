@@ -35,4 +35,4 @@ mpirun -n 2 ./pingpong_MPI 1000000 time_1M_diff.csv
 # add for other sizes
 mpirun -n 2 ./pingpong_MPI 2000000 time_2M_diff.csv
 mpirun -n 2 ./pingpong_MPI 4000000 time_4M_diff.csv
- mpirun -n 2 ./pingpong_MPI 8000000 time_8M_diff.csv
+mpirun -n 2 ./pingpong_MPI 8000000 time_8M_diff.csv

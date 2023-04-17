@@ -32,14 +32,14 @@ int main(int argc, char* argv[]) {
 
 
 
-    // TODO: Create your MPI program.
+    // Create your MPI program.
     if (my_rank == 0) {
     
         // Fill array with incremental values
         for (int i = 0; i < n_items; i++)
             ping_array[i] = i;
 
-        // TODO: if myrank is 0
+        // if myrank is 0
         for (int i = 0; i < 1000; ++i) {
             MPI_Send(ping_array, n_items, MPI_INT, 1, 0, MPI_COMM_WORLD);
             MPI_Recv(ping_array, n_items, MPI_INT, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
@@ -47,12 +47,13 @@ int main(int argc, char* argv[]) {
 
         // End time
         double endtime = MPI_Wtime();
-        // TODO: output
+        // output
         fprintf(outputFile, "%f", endtime-starttime);
+        free(ping_array)
     }
     else {
 
-        // TODO: if my rank not 0
+        // if my rank not 0
         for (int i = 0; i < 1000; ++i) {
             MPI_Recv(ping_array, n_items, MPI_INT, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
             MPI_Send(ping_array, n_items, MPI_INT, 0, 0, MPI_COMM_WORLD);
