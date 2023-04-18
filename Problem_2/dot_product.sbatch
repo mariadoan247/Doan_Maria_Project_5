@@ -28,6 +28,9 @@ module load OpenMPI/4.1.4-GCC-11.3.0
 # module load GCC
 # module load OpenMPI
 
+make clean
+make
+
 mpirun -n 2 ./dot_product_MPI 262144 ../../test_data/Vectors/vec1_2^18.csv ../../test_data/Vectors/vec2_2^18.csv result_2^18.csv time_2^18.csv
 # add other sizes
 mpirun -n 2 ./dot_product_MPI 524288 ../../test_data/Vectors/vec1_2^19.csv ../../test_data/Vectors/vec2_2^19.csv result_2^19.csv time_2^19.csv
