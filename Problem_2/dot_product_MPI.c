@@ -38,7 +38,7 @@ int main (int argc, char *argv[])
     MPI_Comm_rank(comm, &my_rank);
 
     MPI_Bcast(&vec_size, 1, MPI_FLOAT, 0, comm);
-    float local_vec_size = vec_size/comm_sz;
+    int local_vec_size = vec_size/comm_sz;
     float* local_vec_1 = malloc(local_vec_size * sizeof(float));
     float* local_vec_2 = malloc(local_vec_size * sizeof(float));
 
