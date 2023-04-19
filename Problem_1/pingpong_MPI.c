@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
         double endtime = MPI_Wtime();
         // output
         fprintf(outputFile, "%f", endtime-starttime);
-        free(ping_array)
+        free(ping_array);
     }
     else {
 

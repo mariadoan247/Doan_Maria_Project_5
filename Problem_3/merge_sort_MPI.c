@@ -33,7 +33,7 @@ int main (int argc, char *argv[])
     // arrays to use
     // initialize your arrays here
     int local_vec_size = n_items/comm_size;
-    float* local_vec = malloc(n_items * sizeof(float));
+    float* local_vec = malloc(n_items/comm_size * sizeof(float));
     float* global_vec;
 
     // get start time

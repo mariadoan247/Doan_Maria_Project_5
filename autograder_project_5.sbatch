@@ -31,10 +31,10 @@ module load intel/2022.2
 module load OpenMPI/4.1.4-GCC-11.3.0
 
 # To run all the problems and get all results
-# python3 -u autograder_project_5.py
+python3 -u autograder_project_5.py
 
 # To run just problem 2's autograder
-python3 -u autograder_problem_5_2.py
+# python3 -u autograder_problem_5_2.py
 
 # To run just problem 3's autograder
 # python3 -u autograder_problem_5_3.py

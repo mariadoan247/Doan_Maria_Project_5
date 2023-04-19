@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --partition=oucspdn_cpu
-#SBATCH --ntasks=2
-#SBATCH --ntasks-per-node=2
+#SBATCH --ntasks=4
+#SBATCH --ntasks-per-node=4
 #
 #SBATCH --time=00:15:00
 #SBATCH --job-name=hw5prob3
@@ -29,7 +29,14 @@ module load OpenMPI/4.1.4-GCC-11.3.0
 make clean
 make
 
-mpirun -n 2 ./merge_sort_MPI 262144 ../../test-data/vec1_2^18.csv result_2_same_18.csv time_2_same_18.csv
-# add more here ...
-mpirun -n 2 ./merge_sort_MPI 524288 ../../test-data/vec1_2^19.csv result_2_same_19.csv time_2_same_19.csv
-mpirun -n 2 ./merge_sort_MPI 1048576 ../../test-data/vec1_2^20.csv result_2_same_20.csv time_2_same_20.csv
+# mpirun -n 2 ./merge_sort_MPI 262144 ../../test_data/Vectors/vec1_2^18.csv result_2p_same_18.csv time_2p_same_18.csv
+# mpirun -n 2 ./merge_sort_MPI 524288 ../../test_data/Vectors/vec1_2^19.csv result_2p_same_19.csv time_2p_same_19.csv
+# mpirun -n 2 ./merge_sort_MPI 1048576 ../../test_data/Vectors/vec1_2^20.csv result_2p_same_20.csv time_2p_same_20.csv
+
+mpirun -n 4 ./merge_sort_MPI 262144 ../../test_data/Vectors/vec1_2^18.csv result_4p_same_18.csv time_4p_same_18.csv
+mpirun -n 4 ./merge_sort_MPI 524288 ../../test_data/Vectors/vec1_2^19.csv result_4p_same_19.csv time_4p_same_19.csv
+mpirun -n 4 ./merge_sort_MPI 1048576 ../../test_data/Vectors/vec1_2^20.csv result_4p_same_20.csv time_4p_same_20.csv
+
+# mpirun -n 8 ./merge_sort_MPI 262144 ../../test_data/Vectors/vec1_2^18.csv result_8p_same_18.csv time_8p_same_18.csv
+# mpirun -n 8 ./merge_sort_MPI 524288 ../../test_data/Vectors/vec1_2^19.csv result_8p_same_19.csv time_8p_same_19.csv
+# mpirun -n 8 ./merge_sort_MPI 1048576 ../../test_data/Vectors/vec1_2^20.csv result_8p_same_20.csv time_8p_same_20.csv
