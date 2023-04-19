@@ -26,5 +26,10 @@ module load OpenMPI/4.1.4-GCC-11.3.0
 # module load intel
 # module load OpenMPI
 
-mpirun -n 2 ./merge_sort_MPI 262144 ../test-data/vec1_2^18.csv result_2_diff_18.csv time_2_diff_18.csv
+make clean
+make
+
+mpirun -n 2 ./merge_sort_MPI 262144 ../../test-data/vec1_2^18.csv result_2_diff_18.csv time_2_diff_18.csv
 # add more here ...
+mpirun -n 2 ./merge_sort_MPI 524288 ../../test-data/vec1_2^19.csv result_2_diff_19.csv time_2_diff_19.csv
+mpirun -n 2 ./merge_sort_MPI 1048576 ../../test-data/vec1_2^20.csv result_2_diff_20.csv time_2_diff_20.csv

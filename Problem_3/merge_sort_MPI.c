@@ -31,7 +31,10 @@ int main (int argc, char *argv[])
     MPI_Comm_size(MPI_COMM_WORLD, &comm_size);
 
     // arrays to use
-    // TODO: initialize your arrays here
+    // initialize your arrays here
+    int local_vec_size = n_items/comm_size;
+    float* local_vec = malloc(n_items * sizeof(float));
+    float* global_vec;
 
     // get start time
     double local_start, local_finish, local_elapsed, elapsed;
@@ -41,8 +44,20 @@ int main (int argc, char *argv[])
 
 
     // TODO: implement solution here
+    // Step 1: Read a global array from an input file using process 0
+    if (my_rank == 0) {
+        global_vec = read_input(inputFile, n_items);
+        fclose(inputFile);
+    }
 
+    // Step 2: Scatter the global array across all processes
+    MPI_Scatter(global_vec, local_vec_size, MPI_FLOAT, local_vec, local_vec_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
+    // Step 3: Sort the local arrays by every process using the built-in quick sort function (qsort)
+    qsort(local_vec, local_vec_size, sizeof(float), cmpfloat);
+
+    // Step 4: Reduce the local sorted arrays on all processes to a global sorted array on process 0
+    MPI_Gather(local_vec, local_vec_size, MPI_FLOAT, global_vec, local_vec_size, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
     // get elapsed time
     local_finish  = MPI_Wtime();
@@ -64,7 +79,11 @@ int main (int argc, char *argv[])
         FILE* outputFile = fopen(argv[3], "w");
         FILE* timeFile = fopen(argv[4], "w");
 
-        // TODO: output
+        // output
+        for (int i = 0; i < n_items; ++i) {
+            fprintf(outputFile, "%f\n", global_vec[i]);
+        }
+        fprintf(timeFile, "%.20f", local_elapsed);
 
         fclose(outputFile);
         fclose(timeFile);
@@ -84,7 +103,7 @@ float* read_input(FILE* inputFile, int n_items) {
     float* arr = (float*)malloc(n_items * sizeof(float));
     char line[MAXLINE] = {0};
     int i = 0;
-    char* ptr;
+    // char* ptr;
     while (fgets(line, MAXLINE, inputFile)) {
         sscanf(line, "%f", &(arr[i]));
         ++i;
